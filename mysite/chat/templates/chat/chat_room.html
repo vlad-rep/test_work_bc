@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chat Room</title>
+</head>
+<body>
+<h2>Комната чата</h2>
+{% if request.user.is_authenticated %}
+    <h3>Hello {{ request.user.username}}</h3>
+{% else %}
+    <h3>You don`t auth in site!</h3>
+{% endif %}
+<div>
+    <table>
+    Здесь будут ваши сообщения с {{ receiver_name }}
+    <ul>
+        {% if message_history %}
+            {% for message in message_history %}
+             <li>
+                 {{ message.text }} |{{ message.sender }}, {{ message.time }}|
+             </li>
+            {% endfor %}
+        {% endif %}
+        {% if message_history_reverse %}
+            {% for message in message_history_reverse %}
+             <li>
+                 {{ message.text }} |{{ message.sender }}, {{ message.time }}|
+             </li>
+            {% endfor %}
+        {% endif %}
+    </ul>
+    </table>
+</div>
+<form action="{% url 'chat_room' %}" method="get_message">
+    <input name="new_massage" type="text" placeholder="Ваше сообщение...">
+</form>
+
+
+</body>
+</html>

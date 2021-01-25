@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h3>Найди собеседника для общения!</h3>
+
+{% if request.user.is_authenticated %}
+    <h3>Hello {{ request.user.username}}</h3>
+{% else %}
+    <h3>Вы не вошли в свой профиль!</h3>
+    <a href="registration/">Создать провиль</a>
+    <a href="registration/sing_up/">Войти провиль</a>
+{% endif %}
+{% csrf_token %}
+<p></p>
+<form action="{% url 'find_user' %}" method="get">
+  <input name="q" type="text" placeholder="Search...">
+</form>
+<ul>
+    {% if object_list%}
+      {% for user in object_list %}
+        <li>
+          {{ user.username }}
+            <a href="chat_room/">Начать диалог</a>
+        </li>
+      {% endfor %}
+    {% else %}
+        <h3>Нет такого пользователя</h3>
+    {% endif %}
+</ul>
+
+</body>
+</html>

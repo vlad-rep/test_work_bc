@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Test URL</title>
+</head>
+<body>
+<h3>
+    {{ some_list }}
+    <ul>
+        {% for _ in some_list %}
+            <li> {{ _ }} </li>
+        {% endfor %}
+    </ul>
+</h3>
+</body>
+</html>

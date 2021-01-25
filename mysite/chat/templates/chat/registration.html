@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Регистрация</title>
+</head>
+<body>
+    <h2>Регистрация</h2>
+    {{ error_message }}
+    <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+
+        <button type="submit">Sing up</button>
+    </form>
+    <p>У вас уже есть аккаунт?</p>
+    <p><a href="sing_up/">Войти в учетную запись</a></p>
+</body>
+</html>
