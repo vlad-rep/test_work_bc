@@ -16,6 +16,7 @@ class UserCreateView(generic.CreateView):
     form_class = UserCreateForm
     success_url = '/'
 
+
     def check(self):
         if User.objects.filter(username=self.cleaned_data['username']).exists():
             error_message = 'Этот логин уже занят'
@@ -49,15 +50,23 @@ class ChatRoom(View):
         sender = request.user.id
         receiver = request.session.get('receiver_id')
         receiver_name = request.session.get('receiver_name')
+        message_history_reverse = None
 
-        message_history = Message.objects.filter(
-            Q(sender=sender) & Q(receiver=receiver)
-        )
-        message_history_reverse = Message.objects.filter(
-            Q(sender=receiver) & Q(receiver=sender)
-        )
+        if receiver != sender:
+            message_history = Message.objects.filter(
+                Q(sender=sender) & Q(receiver=receiver)
+            )
+            message_history_reverse = Message.objects.filter(
+                Q(sender=receiver) & Q(receiver=sender)
+            )
+            new_message = self.request.GET.get('new_massage')
+        else:
+            message_history = Message.objects.filter(
+                Q(sender=sender) & Q(receiver=receiver)
+            )
+            new_message = self.request.GET.get('new_massage')
 
-        new_message = self.request.GET.get('new_massage')
+
         if new_message:
             new_message_to_db = Message(text=new_message,
                                         sender=User.objects.get(pk=sender),
